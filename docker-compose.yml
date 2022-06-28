@@ -1,0 +1,10 @@
+services:
+  web:
+    build: .
+    user: "${COMPOSE_UID:-1000}:${COMPOSE_GID:-1000}"
+    working_dir: /src/web
+    volumes:
+      - ./web:/src/web
+    ports:
+      - "3000:8080"
+    command: ["npm", "run", "serve"]
