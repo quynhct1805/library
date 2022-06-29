@@ -1,6 +1,6 @@
 services:
   web:
-    build: .
+    build: ./.docker/web/
     user: "${COMPOSE_UID:-1000}:${COMPOSE_GID:-1000}"
     working_dir: /src/web
     volumes:
@@ -8,3 +8,40 @@ services:
     ports:
       - "3000:8080"
     command: ["npm", "run", "serve"]
+  api:
+    build: ./.docker/api/
+    volumes:
+      - ./api:/var/task
+    working_dir: /var/task
+    user: "${COMPOSE_UID:-1000}:${COMPOSE_GID:-1000}"
+    ports:
+      - "8000:8000"
+    environment:
+      - HOME=/tmp
+    command: ["uvicorn", "main:app", "--reload", "--host=0.0.0.0"]    
+    entrypoint: ['poetry', 'run']
+  db:    
+    build: ./.docker/db    
+    volumes:      
+      - db-data:/var/lib/postgresql/data    
+    ports:      
+      - "4000:5432"    
+
+    environment:      
+      - POSTGRES_USER=postgres      
+      - POSTGRES_PASSWORD=postgres
+  pgadmin:    
+    container_name: pgadmin    
+    image: dpage/pgadmin4    
+    environment:      
+      - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org      
+      - PGADMIN_DEFAULT_PASSWORD=admin    
+    ports:      
+      - "5000:80"    
+    depends_on:      
+      - db    
+    logging:      
+      driver: none
+volumes:  
+  db-data:    
+    driver: local
