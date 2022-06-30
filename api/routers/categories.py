@@ -4,7 +4,7 @@ from models.categories import Categories
 router = APIRouter()
 
 
-@router.get("/categories/", tags=["categories"])
+@router.get("/api/categories/", tags=["categories"])
 async def read_categories():
     categories = Categories.select()
     result = []
