@@ -20,7 +20,7 @@
             <v-btn stacked>
                 <v-badge
                     content="2"
-                    color="#C62828"
+                    color="success"
                 >
                     <v-icon icon="mdi-cart"></v-icon>
                 </v-badge>
@@ -37,7 +37,7 @@
             <v-divider></v-divider>
 
             <v-list density="compact" nav>
-                <v-list-item prepend-icon="mdi-home-outline" value="home">Trang chủ</v-list-item>
+                <v-list-item prepend-icon="mdi-home-outline" value="home" href="http://localhost:3000/">Trang chủ</v-list-item>
                 <v-list-item prepend-icon="mdi-book-clock-outline" value="account">Đang mượn</v-list-item>
                 <v-list-item prepend-icon="mdi-history" value="users">Lịch sử</v-list-item>
 
@@ -55,12 +55,21 @@
             <v-chip-group
             mandatory
             column
+            v-model="defaultFilteredBooks"
             >
                 <v-chip 
-                variant="outlined"
-                v-for="tag in tags" :key="tag.id"
+                    variant="outlined"
+                    @click="filteredGetAllBooks()"
+                    value="all"
                 >
-                    {{ tag.name }}
+                    Tất cả
+                </v-chip>
+                <v-chip 
+                variant="outlined"
+                v-for="category in categories" :key="category.id"
+                @click="filteredByCategoryId(category.id)"
+                >
+                    {{ category.name }}
                 </v-chip>
             </v-chip-group>
 
@@ -69,6 +78,10 @@
                     prepend-inner-icon="mdi-magnify"
                     placeholder="Nhập tên sách"
                     variant="underlined"
+                    v-model="searchBook"
+                    :items="books"
+                    item-title="name"
+                    item-value="id"
                 ></v-autocomplete>
 
                 <v-spacer></v-spacer>
@@ -77,24 +90,31 @@
                     label="Sắp xếp"
                     :items="arrange"
                     variant="underlined"
+                    
                 ></v-select>
             </v-container>
 
-            <v-card>The loai</v-card>
+            <div 
+                v-for="category in categories" :key="category.id"
+            >
+                <v-card>{{ category.name }}</v-card>
+    
+                <v-row>
+                    <div v-for="book in filteredBooks" :key="book.id">
+                        <v-col v-if="book.category_id === category.id">
+                            <v-img
+                                width="300"
+                                :aspect-ratio="1"
+                                :src= "`/${book.image}`"
+                            ></v-img>
+                            <v-card-title >
+                                {{ book.name }}
+                            </v-card-title>
+                        </v-col>
+                    </div>
+                </v-row>
+            </div>
 
-            <v-row>
-                <v-col cols="3" v-for="book in books" :key="book">
-                    <v-img
-                        class="bg-white"
-                        width="300"
-                        :aspect-ratio="1"
-                        src="../assets/số-đỏ.jpg"
-                    ></v-img>
-                    <v-card-title>
-                        {{ book }}
-                    </v-card-title>
-                </v-col>
-            </v-row>
         </v-main>
     </v-layout>
 
@@ -102,35 +122,69 @@
 
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 const hideNav = ref(true)
 
-// const selectDefault = ref('Tất cả')
-const tags = ref([])
+const categories = ref([])
 
 const arrange = ref(['Tên sách (A-Z)', 'Đánh giá', 'Số lượt mượn'])
+const sort = ref('')
 
-const books = ref(['So do', 'Tat den', 'Chi pheo'])
+const books = ref([])
+const filteredBooks = ref([])
+const defaultFilteredBooks = ref('all')
 
-// const category = ref([])
+const searchBook = null
 
 const getCategories = async() => {
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
-    // const myRequest = new Request('/api/categories/', {
-    //     method: 'GET',
-    // });
     const respones = await fetch('/api/categories/')
     const result = await respones.json()
     return result
 }
+getCategories().then(res => categories.value = res)
 
-// getCategories().then(res => tags.value = res)
-onMounted(async () => {tags.value = await getCategories()})
+
+
+const getBooks = async() => {
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+    const respones = await fetch('/api/books/')
+    const result = await respones.json()
+    return result
+}
+getBooks().then(res => {
+    books.value = res
+    filteredBooks.value = res
+})
+
+
+function filteredByCategoryId(category_id) {
+    filteredBooks.value = books.value.filter((b) => b.category_id === category_id)
+}
+
+function filteredGetAllBooks() {
+    filteredBooks.value = books.value
+}
+
+function sortBooks() {
+    filteredBooks.value.sort((a, b) => {
+        const nameA = a.name; 
+        const nameB = b.name; 
+        if (nameA < nameB) return -1;
+        if (nameA > nameB) return 1;
+
+        return 0;
+    });
+}
+
+
 </script>
 
 
 <style scoped>
+/* NavBar */
 .v-list ::v-deep .v-list-item--nav:not(:only-child) {
     height: 50px;
     font-size: 24px;
@@ -142,7 +196,9 @@ onMounted(async () => {tags.value = await getCategories()})
     margin-right: 16px;
 }
 
-.v-toolbar-title {
+
+/* ToolBar */
+.v-toolbar ::v-deep .v-toolbar-title {
     font-size: 28px;
     text-transform: uppercase;
     margin-left: 8px;
@@ -154,10 +210,10 @@ onMounted(async () => {tags.value = await getCategories()})
     margin-top: -4px;
 }
 
-.v-layout {
-    height: 100%;
-}
 
+/* Main */
+
+/* ChipGroup */
 .v-main ::v-deep .v-chip-group {
     margin: 16px 0 0 20px;
 }
@@ -169,26 +225,7 @@ onMounted(async () => {tags.value = await getCategories()})
     color: #964a27;
 }
 
-.v-main ::v-deep .v-autocomplete {
-    width: 35%;
-}
-
-.v-autocomplete ::v-deep .v-field__field {
-    padding-top: 6px;
-}
-
-.v-autocomplete ::v-deep .v-field__prepend-inner {
-    padding: 6px 4px;
-}
-
-.v-autocomplete ::v-deep .v-input__details {
-    display: none;
-}
-
-.v-autocomplete ::v-deep input {
-    width: 100%;
-}
-
+/* Container - Search - Filter*/
 .v-main ::v-deep .v-container {
     margin: 0;
     max-width: 100%;
@@ -197,19 +234,43 @@ onMounted(async () => {tags.value = await getCategories()})
     padding: 8px 32px;    
 }
 
-.v-main ::v-deep .v-select {
-    width: 15%;
-    margin: 12px 0 0 24px;
+.v-main ::v-deep .v-autocomplete {
+    width: 35%;
+}
+/* .v-container ::v-deep .v-container {
+    width: 35%;
+    padding: 8px 0;
+    display: block;
+} */
+
+.v-autocomplete ::v-deep .v-field__field {
+    padding-top: 6px;
 }
 
+.v-autocomplete ::v-deep .v-field__prepend-inner {
+    padding: 8px 4px;
+}
+
+.v-autocomplete ::v-deep .v-input__details,
 .v-select ::v-deep .v-input__details {
     display: none;
 }
 
+.v-autocomplete ::v-deep input {
+    width: 100%;
+}
+
+.v-main ::v-deep .v-select {
+    width: 15%;
+    margin: 12px 0 0 24px;
+}
+    /* Spacer */
 .v-main ::v-deep .flex-grow-1 {
     width: 50%;
 }
 
+
+/* List Books */
 .v-main ::v-deep .v-card {
     width: 50%;
     margin: 24px auto;

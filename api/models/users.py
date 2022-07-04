@@ -9,5 +9,4 @@ class Users(Base):
     email = TextField(unique = True, null = True)
     balance = DoubleField()
     active = BooleanField(default = True)
-
-
+    

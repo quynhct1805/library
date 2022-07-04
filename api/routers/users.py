@@ -4,7 +4,7 @@ from models.users import Users
 router = APIRouter()
 
 
-@router.get("/users/", tags=["users"])
+@router.get("/api/users/", tags=["users"])
 async def read_users():
     users = Users.select()
     result = []

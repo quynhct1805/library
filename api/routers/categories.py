@@ -15,4 +15,4 @@ async def read_categories():
 
 @router.post("/categories/", tags=["categories"])
 async def create_category():
-    category = Categories.create(name="Văn học nước ngoài")
+    category = Categories.create(name="Triết học - Tâm lý")

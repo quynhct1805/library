@@ -41,3 +41,4 @@ class Books(Base):
     summary = TextField()
     due_date = DateField()
     book_status = EnumField(choices=Status)
+    images = TextField()
