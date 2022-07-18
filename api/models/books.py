@@ -3,6 +3,7 @@ from .users import Users
 from peewee import *
 from . import Base
 from enum import Enum
+from playhouse.postgres_ext import ArrayField
 
 
 class EnumField(CharField):
@@ -15,7 +16,7 @@ class EnumField(CharField):
 
 
     def db_value(self, value):
-        return value.name
+        return value
 
 
     def python_value(self, value):
@@ -30,10 +31,10 @@ class Status(Enum):
 
 class Books(Base):
     id = AutoField(primary_key = True)
-    name = TextField(null = True)
+    name = TextField()
     user_id = ForeignKeyField(Users, to_field = "id")
     category_id = ForeignKeyField(Categories, to_field = "id")
-    author_ids = IntegerField()
+    author_ids = ArrayField(IntegerField)
     publisher = TextField()
     years = IntegerField()
     pages = IntegerField()
@@ -41,4 +42,4 @@ class Books(Base):
     summary = TextField()
     due_date = DateField()
     book_status = EnumField(choices=Status)
-    images = TextField()
+    image = TextField()

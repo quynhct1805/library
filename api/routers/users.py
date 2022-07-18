@@ -20,6 +20,6 @@ async def read_user(user_id):
         return({"id": user.id, "name": user.name, "phone": user.phone, "email": user.email})
     
 
-@router.post("/users/", tags=["users"])
-async def create_user():
-    users = Users.create(name="ken2", phone="01555555", email="ken2@gmail.com")
+# @router.post("/users/", tags=["users"])
+# async def create_user():
+#     users = Users.create(name="ken2", phone="01555555", email="ken2@gmail.com")
