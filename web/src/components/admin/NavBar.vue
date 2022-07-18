@@ -1,0 +1,53 @@
+<template>
+
+    <v-navigation-drawer
+    permanent
+    location="left"
+    v-model="hideNav"
+    >
+        <v-divider></v-divider>
+
+        <v-list density="compact" nav>
+            <v-list-item prepend-icon="mdi-home-outline" value="home" >
+                Trang chủ
+            </v-list-item>
+            <v-list-item prepend-icon="mdi-book-open-variant" value="books" :to="{name: 'ManageBooks'}">Sách</v-list-item>
+            <v-list-item prepend-icon="mdi-bookshelf" value="categories" :to="{name: 'ManageCategories'}">Thể loại</v-list-item>
+            <v-list-item prepend-icon="mdi-book-clock-outline" value="borrow">Đang mượn</v-list-item>
+            <v-list-item prepend-icon="mdi-account" value="users">Người dùng</v-list-item>
+
+            <v-list-item><v-divider></v-divider></v-list-item>
+
+            <v-list-item prepend-icon="mdi-bookmark-multiple-outline" value="rules">Nội quy</v-list-item>
+            <v-list-item prepend-icon="mdi-book-open-page-variant-outline" value="intro">Giới thiệu</v-list-item>
+
+        </v-list>
+    </v-navigation-drawer>
+
+</template>
+
+
+<script setup>
+import { ref } from 'vue'
+
+const hideNav = ref(true)
+
+
+</script>
+
+
+<style scoped>
+
+/* NavBar */
+.v-list ::v-deep .v-list-item--nav:not(:only-child) {
+    height: 50px;
+    font-size: 24px;
+    padding-left: 16px;
+    margin-bottom: 8px;
+}
+
+.v-list-item ::v-deep .v-icon {
+    margin-right: 16px;
+}
+
+</style>
