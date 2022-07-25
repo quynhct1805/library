@@ -10,6 +10,20 @@ from pydantic import BaseModel
 router = APIRouter()
 
 
+class DataUpdateBookStatus(BaseModel):
+    status: str
+class DataBook(BaseModel):
+    image: str
+    name: str
+    publisher: str
+    author_ids: list[int]
+    category_id: int
+    years: int
+    pages: int
+    fee_per_day: float
+    summary: str
+
+
 @router.get("/api/books/", tags=["books"])
 async def read_books():
     books = (Books
@@ -69,8 +83,7 @@ async def read_books(category_id):
     return result
     
 
-class DataUpdateBookStatus(BaseModel):
-    status: str
+
 @router.patch("/api/book/{book_id}", tags=["books"])
 async def update_book(book_id, data: DataUpdateBookStatus):
     print (data)
@@ -92,15 +105,20 @@ async def read_book(book_id):
 @router.get("/api/admin/books/", tags=["books"])
 async def read_books():
     books = (Books
-                .select(Books.id, Books.name, Books.category_id, Books.book_status, Books.fee_per_day, fn.ARRAY_AGG(Authors.name).alias('aname'),
-                Books.image, Books.publisher, Books.years, Books.pages, Books.summary)
+                .select(Books.id, Books.name, Books.category_id, Books.book_status, Books.fee_per_day, fn.ARRAY_AGG(Authors.name).alias('anames'),
+                fn.ARRAY_AGG(Authors.id).alias('aids'), Books.image, Books.publisher, Books.years, Books.pages, Books.summary)
                 .join(Authors, on=(Authors.id == fn.ANY(Books.author_ids)))
                 .group_by(Books.id))
     result = []
     for book in books:
-        result.append({"id": book.id, "name": book.name, "category_name": book.category_id.name, "status": book.book_status,
-                        "fee": book.fee_per_day,"author_names": book.aname, "image": book.image, "publisher": book.publisher,
+        result.append({"id": book.id, "name": book.name, "category_id": book.category_id.id, "category_name": book.category_id.name, "status": book.book_status,
+                        "fee_per_day": book.fee_per_day,"image": book.image, "author_ids": book.aids,"author_names": book.anames, "publisher": book.publisher,
                         "year": book.years, "pages": book.pages, "summary": book.summary})
     return (result)
 
 
+@router.post("/api/books/", tags=["books"], status_code=200)
+async def create_book(book: DataBook):
+    # print(book)
+    Books.insert(**book.dict()).execute()
+    return "create book"

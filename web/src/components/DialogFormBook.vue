@@ -1,9 +1,5 @@
 <template>
 
-    <v-dialog
-    v-model="form"
-    persistent
-    >
         <v-card>
             <v-card-title>
                 <span class="text-h5">Thêm sách</span>
@@ -18,6 +14,7 @@
                                 multiple
                                 label="Hình ảnh"
                                 variant="underlined"
+                                
                             ></v-file-input>
                         </v-col>
                         <v-col
@@ -101,7 +98,7 @@
                             label="Phí"
                             persistent-hint
                             variant="underlined"
-                            v-model="book.fee"
+                            v-model="book.fee_per_day"
                             ></v-text-field>
                         </v-col>
                         <v-col
@@ -122,38 +119,33 @@
                 <v-btn
                     color="blue darken-4"
                     text
-                    @click="form = false"
+                    @click='emit("addRespone", false)'
                 >
                     Hủy
                 </v-btn>
                 <v-btn
                     color="#62311a"
                     text
-                    @click="form = false"
+                    @click="handledClickSave"
                 >
                     Lưu
                 </v-btn>
             </v-card-actions>
         </v-card>
-    </v-dialog>
 
 </template>
 
 
 <script setup>
-import { ref, defineProps, defineEmits, reactive, computed } from 'vue'
+import { ref, defineProps, defineEmits, reactive } from 'vue'
 
 const props = defineProps({
-    form: Boolean,
     book: Object
 })
 
-const form = ref(props.form)
-const bookss = computed(() => props.book)
+const book = reactive({...props.book})
 
 const emit = defineEmits(['addRespone'])
-
-emit('addRespone', form)
 
 
 const authors = ref([])
@@ -181,6 +173,32 @@ getCategories().then(res => {
     categories.value = res
 })
 
+
+const createBook = () => {
+    fetch('/api/books/',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify({
+                ...book
+            })
+        }
+    )
+}
+
+
+function handledClickSave() {
+
+    // if (props.action === 'add') 
+        createBook()
+    // else 
+    //     updateCategory()
+
+    emit("addRespone", false)
+}
 
 </script>
 

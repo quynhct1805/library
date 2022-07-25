@@ -29,7 +29,7 @@
             
             <v-btn
                 color="success"
-                @click.stop="form = true; categoryInfo = Object.assign({}, {})"
+                @click.stop="form = true; categoryInfo = Object.assign({}, {}), action = 'add'"
             >
                 Thêm
             </v-btn>
@@ -54,7 +54,8 @@
                     <v-col class="text-center">{{ category.name }}</v-col>
                     <v-col class="text-center">{{ category.description }}</v-col>
                     <v-col class="text-center" cols="2">
-                        <v-btn color="warning" @click.stop="form = true; categoryInfo = Object.assign({}, category)">Sửa</v-btn>
+                        <v-btn color="warning" @click.stop="form = true; categoryInfo = Object.assign({}, category), action='edit'">
+                        Sửa</v-btn>
                         <v-btn color="error">Xóa</v-btn>
                     </v-col>
 
@@ -74,6 +75,7 @@
             >
                 <dialog-form-category 
                     :category="categoryInfo"
+                    :action="action"
                     @addRespone="(res) => form = res"/>
             </v-dialog>
         </v-main>
@@ -90,6 +92,7 @@ import DialogFormCategory from '@/components/DialogFormCategory.vue';
 
 const categories = ref([])
 const categoryInfo = ref({})
+const action = ref('')
 
 const form = ref(false)
 
@@ -119,6 +122,7 @@ watch(sort, () => {
         sortCategoriesByName()
     }
 })
+
 </script>
 
 

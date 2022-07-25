@@ -29,7 +29,7 @@ async def read_categories(category_id):
 @router.post("/api/categories/", tags=["categories"], status_code=200)
 async def create_category(category: DataCategory):
     # print(category)
-    Categories.insert(code=category.code, name=category.name, description=category.description).execute()
+    Categories.insert(**category.dict()).execute()
     return "create category"
 
 

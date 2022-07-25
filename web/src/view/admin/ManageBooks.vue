@@ -75,11 +75,15 @@
             rounded="circle"
             ></v-pagination>
 
-            <dialog-form-book 
-                v-model="form"
-                :form="form"
-                :book="bookInfo"
-                @addRespone="(res) => form = res"/>
+            <v-dialog
+            v-model="form"
+            persistent
+            >
+                <dialog-form-book 
+                    :book="bookInfo"
+                    @addRespone="(res) => form = res"/>
+            </v-dialog>
+
         </v-main>
     </v-layout>
 

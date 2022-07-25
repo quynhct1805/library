@@ -66,10 +66,11 @@
 
 
 <script setup>
-import { ref, defineProps, defineEmits, reactive } from 'vue'
+import { defineProps, defineEmits, reactive } from 'vue'
 
 const props = defineProps({
-    category: Object
+    category: Object,
+    action: String
 })
 
 
@@ -79,8 +80,6 @@ const emit = defineEmits(['addRespone'])
 
 
 const createCategory = () => {
-    // console.log(cate)
-    // console.log(cate.value)
     fetch('/api/categories/',
         {
             method: 'POST',
@@ -95,25 +94,30 @@ const createCategory = () => {
     )
 }
 
-const check = reactive()
 
 const updateCategory = () => {
     fetch(`/api/categories/${cate.id}`,
-    {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            ...cate
-        })
-    }
+        {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                ...cate
+            })
+        }
     )
 }
 
+
+
 function handledClickSave() {
-    // createCategory()
-    updateCategory()
+
+    if (props.action === 'add') 
+        createCategory()
+    else 
+        updateCategory()
+
     emit("addRespone", false)
 }
 

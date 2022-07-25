@@ -18,7 +18,7 @@ import AppBar from '@/components/AppBar.vue';
 import NavBar from '@/components/admin/NavBar.vue';
 import DetailBook from '@/components/DetailBook.vue';
 
-const props = defineProps({
+defineProps({
     id: String
 })
 

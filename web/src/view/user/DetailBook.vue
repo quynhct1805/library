@@ -60,7 +60,7 @@ import NavBar from '@/components/user/NavBar.vue';
 import DetailBook from '@/components/DetailBook.vue';
 
 
-const props = defineProps({
+defineProps({
     id: String
 })
 

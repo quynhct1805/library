@@ -115,7 +115,7 @@ getAuthors().then(res => authors.value = res)
 
 
 const updatedStatus = async() => {
-    const respones = await fetch(`/api/book/${props.id}`, 
+    await fetch(`/api/book/${props.id}`, 
     {method: 'PATCH',
     headers: {
         'Accept': 'application/json',
