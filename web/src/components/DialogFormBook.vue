@@ -215,4 +215,9 @@ function handledClickSave() {
 .v-autocomplete ::v-deep .v-field__input {
     height: 24px;
 }
+
+.v-input ::v-deep .v-input__details {
+    padding-top: 0;
+    margin-bottom: 0;
+}
 </style>

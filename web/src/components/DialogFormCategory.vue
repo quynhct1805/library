@@ -76,7 +76,7 @@ const props = defineProps({
 
 const cate = reactive({...props.category})
 
-const emit = defineEmits(['addRespone'])
+const emit = defineEmits(['addRespone', 'data'])
 
 
 const createCategory = () => {
@@ -96,7 +96,7 @@ const createCategory = () => {
 
 
 const updateCategory = () => {
-    fetch(`/api/categories/${cate.id}`,
+    fetch(`/api/categories/${cate.code}`,
         {
             method: 'PATCH',
             headers: {
@@ -119,6 +119,8 @@ function handledClickSave() {
         updateCategory()
 
     emit("addRespone", false)
+    emit('data', cate)
+
 }
 
 </script>

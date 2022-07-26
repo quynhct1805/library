@@ -76,7 +76,8 @@
                 <dialog-form-category 
                     :category="categoryInfo"
                     :action="action"
-                    @addRespone="(res) => form = res"/>
+                    @addRespone="(res) => form = res"
+                    @data="(res) => categoryInfo = Object.assign({}, res)"/>
             </v-dialog>
         </v-main>
     </v-layout>
@@ -122,6 +123,8 @@ watch(sort, () => {
         sortCategoriesByName()
     }
 })
+
+
 
 </script>
 
