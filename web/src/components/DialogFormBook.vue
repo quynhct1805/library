@@ -208,15 +208,15 @@ function handledClickSave() {
     max-width: 800px;
 }
 
-.v-autocomplete ::v-deep input {
+.v-autocomplete :deep input {
     width: 100%;
 }
 
-.v-autocomplete ::v-deep .v-field__input {
+.v-autocomplete :deep .v-field__input {
     height: 24px;
 }
 
-.v-input ::v-deep .v-input__details {
+.v-input :deep .v-input__details {
     padding-top: 0;
     margin-bottom: 0;
 }

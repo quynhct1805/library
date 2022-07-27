@@ -139,7 +139,7 @@ watch(sort, () => {
 
 /* Container - Search - Filter*/
 
-.v-main ::v-deep .v-container {
+.v-main :deep .v-container {
     margin: 0;
     max-width: 100%;
     display: flex;
@@ -147,78 +147,78 @@ watch(sort, () => {
     padding: 16px 32px;    
 }
 
-.v-main ::v-deep .v-autocomplete {
+.v-main :deep .v-autocomplete {
     width: 35%;
 }
 
-.v-main ::v-deep .v-select {
+.v-main :deep .v-select {
     width: 15%;
     margin: 12px 0 0 24px;
 }
     
-.v-autocomplete ::v-deep .v-field__field {
+.v-autocomplete :deep .v-field__field {
     padding-top: 6px;
 }
 
-.v-autocomplete ::v-deep .v-field__prepend-inner {
+.v-autocomplete :deep .v-field__prepend-inner {
     padding: 8px 4px;
 }
 
-.v-autocomplete ::v-deep .v-input__details,
-.v-select ::v-deep .v-input__details {
+.v-autocomplete :deep .v-input__details,
+.v-select :deep .v-input__details {
     display: none;
 }
 
-.v-autocomplete ::v-deep input {
+.v-autocomplete :deep input {
     width: 100%;
 }
 
 /* Spacer */
-.v-main ::v-deep .flex-grow-1 {
+.v-main :deep .flex-grow-1 {
     width: 50%;
 }
 
 /* Table */
 
-.v-main ::v-deep .v-table {
+.v-main :deep .v-table {
     margin: 24px 8px;
     font-size: 18px;
 }
 
 /* btnAdd */
-.v-main ::v-deep .v-btn {
+.v-main :deep .v-btn {
     margin: 16px 48px;
 }
 
 /* Table */
-.v-table ::v-deep .v-btn {
+.v-table :deep .v-btn {
     margin: 0 16px 0 0;
 }
 
-.v-main ::v-deep .v-pagination {
+.v-main :deep .v-pagination {
     float: left;
 }
 
-.v-pagination ::v-deep .v-btn {
+.v-pagination :deep .v-btn {
     margin: 0;
 }
 
-.v-table ::v-deep .v-row {
+.v-table :deep .v-row {
     margin: -8px 0;
 }
 
-.v-table ::v-deep .v-row.title {
+.v-table :deep .v-row.title {
     font-weight: bold;
     font-size: 20px;
     margin-bottom: 8px;
 }
 
-.v-row ::v-deep a {
+.v-row :deep a {
     display: contents;
     color: black;
 }
 
-.v-table ::v-deep .v-row.content:hover {
+.v-table :deep .v-row.content:hover {
     background-color: #F5F5F5;
 }
 </style>

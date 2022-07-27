@@ -39,14 +39,14 @@ const hideNav = ref(true)
 <style scoped>
 
 /* NavBar */
-.v-list ::v-deep .v-list-item--nav:not(:only-child) {
+.v-list :deep .v-list-item--nav:not(:only-child) {
     height: 50px;
     font-size: 24px;
     padding-left: 16px;
     margin-bottom: 8px;
 }
 
-.v-list-item ::v-deep .v-icon {
+.v-list-item :deep .v-icon {
     margin-right: 16px;
 }
 

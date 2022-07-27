@@ -176,17 +176,17 @@ getReviewsBook().then(res => comments.value = res)
 }
 
 /* Img */
-.v-container ::v-deep div.img {
+.v-container :deep div.img {
     width: 40%;
 }
 
-.v-container ::v-deep .v-img {
+.v-container :deep .v-img {
     width: 100%;
     padding: 0 40px;
 }
 
 /* Container Info */
-.v-container ::v-deep .v-container {
+.v-container :deep .v-container {
     display: block;
     padding-top: 0;
     width: 50%;
@@ -194,24 +194,24 @@ getReviewsBook().then(res => comments.value = res)
     margin-right: auto;
 }
 
-.v-container ::v-deep .v-card {
+.v-container :deep .v-card {
     max-width: 100%;
     background-color: #f0e2ca;
 }
 
-.v-card ::v-deep .v-card-title {
+.v-card :deep .v-card-title {
     text-align: center;
     text-transform: uppercase;
     display: block;
     font-size: 32px;
 }
 
-.v-card-content ::v-deep .v-card-text {
+.v-card-content :deep .v-card-text {
     padding: 12px 16px;
     font-size: 20px;
 }
 
-.v-container ::v-deep .v-btn {
+.v-container :deep .v-btn {
     height: 40px;
     border-radius: 4px;
 }
@@ -228,34 +228,34 @@ getReviewsBook().then(res => comments.value = res)
 }
 
 
-p ::v-deep strong {
+p :deep strong {
     font-size: 36px;
 }
 
-.v-list-item ::v-deep span.time {
+.v-list-item :deep span.time {
     font-size: 16px;
     color: gray;
     font-style: oblique;
     font-weight: 400;
 }
 
-.v-rating ::v-deep .v-btn {
+.v-rating :deep .v-btn {
     margin: 0px;
     min-width: 20px;
     height: 20px;
 }
 
-.v-list-item ::v-deep .v-card-text {
+.v-list-item :deep .v-card-text {
     padding: 0;
     font-size: 1.1rem;
 }
 
 
-.v-list ::v-deep .v-input__details {
+.v-list :deep .v-input__details {
     display: none;
 }
 
-.v-banner-actions ::v-deep .v-btn {
+.v-banner-actions :deep .v-btn {
     margin: 0;
 }
 </style>

@@ -132,11 +132,11 @@ function handledClickSave() {
     max-width: 800px;
 }
 
-.v-autocomplete ::v-deep input {
+.v-autocomplete :deep input {
     width: 100%;
 }
 
-.v-autocomplete ::v-deep .v-field__input {
+.v-autocomplete :deep .v-field__input {
     height: 24px;
 }
 </style>

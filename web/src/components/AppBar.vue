@@ -35,14 +35,14 @@ const hideNav = ref(true)
 <style scoped>
 
 /* ToolBar */
-.v-toolbar ::v-deep .v-toolbar-title {
+.v-toolbar :deep .v-toolbar-title {
     font-size: 28px;
     text-transform: uppercase;
     margin-left: 8px;
     line-height: 44px;
 }
 
-.v-toolbar-title ::v-deep .v-avatar {
+.v-toolbar-title :deep .v-avatar {
     margin-right: 8px;
     margin-top: -4px;
 }
