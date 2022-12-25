@@ -7,7 +7,7 @@
         <v-main>
 
             <detail-book :id="id">
-                Mượn
+                Mượn hello
                 
                 <template v-slot:comment>
                     <v-banner lines="two">
